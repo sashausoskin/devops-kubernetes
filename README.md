@@ -2,4 +2,4 @@ Exercises for the [DevOps with Kubernetes](https://courses.mooc.fi/org/uh-cs/cou
 
 # Submissions
 ## Chapter 1
-- Exercise 1: 
+- Exercise 1: https://github.com/sashausoskin/devops-kubernetes/tree/1.1
