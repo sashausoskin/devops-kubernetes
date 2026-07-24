@@ -13,5 +13,5 @@ spec:
         app: log-output
     spec:
       containers:
-        - name: hashgenerator
+        - name: log-output
           image: sashausoskin/log-output:v1
