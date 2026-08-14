@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: log-output
-          image: sashausoskin/log-output:v1
+          image: sashausoskin/log-output:v2
