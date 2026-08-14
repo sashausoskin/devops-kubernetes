@@ -11,3 +11,4 @@ Exercises for the [DevOps with Kubernetes](https://courses.mooc.fi/org/uh-cs/cou
 - Exercise 7: https://github.com/sashausoskin/devops-kubernetes/tree/1.7
 - Exercise 8: https://github.com/sashausoskin/devops-kubernetes/tree/1.8
 - Exercise 9: https://github.com/sashausoskin/devops-kubernetes/tree/1.9
+- Exercise 10: https://github.com/sashausoskin/devops-kubernetes/tree/1.10
