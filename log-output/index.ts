@@ -1,7 +1,16 @@
 import * as uuid from 'uuid'
-import express from 'express'
+import path from 'path'
+import fs from 'fs'
 
 const string = uuid.v7();
+
+const directory = path.join('/', 'usr', 'src', 'app', 'files')
+const filePath = path.join(directory, 'log.txt')
+
+const writeToFile = (contents: string) => {
+  if (!fs.existsSync(directory)) fs.mkdirSync(directory, {recursive: true})
+  fs.writeFileSync(filePath, contents)
+}
 
 const getStatus = () => {
     const timeStampDate = new Date(Date.now())
@@ -10,17 +19,7 @@ const getStatus = () => {
 }
 
 setInterval(() => {
-    console.log(getStatus())
+    writeToFile(getStatus())
 }, 5000)
 
-
-const app = express()
-const port = 3000
-
-app.get('/status', (req, res) => {
-  res.send(getStatus())
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+console.log('Started logger')

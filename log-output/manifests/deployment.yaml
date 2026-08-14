@@ -12,6 +12,17 @@ spec:
       labels:
         app: log-output
     spec:
+      volumes:
+        - name: log-output
+          emptyDir: {}
       containers:
         - name: log-output
-          image: sashausoskin/log-output:v2
+          image: sashausoskin/log-output:v3
+          volumeMounts:
+          - name: log-output
+            mountPath: /usr/src/app/files
+        - name: log-getter
+          image: sashausoskin/log-getter:v1
+          volumeMounts:
+          - name: log-output
+            mountPath: /usr/src/app/files
