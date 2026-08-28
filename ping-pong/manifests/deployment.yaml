@@ -12,6 +12,13 @@ spec:
       labels:
         app: ping-pong
     spec:
+      volumes:
+      - name: pingpong-counter
+        persistentVolumeClaim:
+          claimName: pingpong-claim
       containers:
         - name: ping-pong
-          image: sashausoskin/ping-pong:v2
+          image: sashausoskin/ping-pong:v3
+          volumeMounts:
+            - name: pingpong-counter
+              mountPath: /usr/src/app/pingpong

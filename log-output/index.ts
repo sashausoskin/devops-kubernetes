@@ -1,16 +1,14 @@
 import * as uuid from 'uuid'
 import path from 'path'
 import fs from 'fs'
+import express from 'express'
 
 const string = uuid.v7();
 
-const directory = path.join('/', 'usr', 'src', 'app', 'files')
-const filePath = path.join(directory, 'log.txt')
+const PORT = process.env.PORT || 3001
 
-const writeToFile = (contents: string) => {
-  if (!fs.existsSync(directory)) fs.mkdirSync(directory, {recursive: true})
-  fs.writeFileSync(filePath, contents)
-}
+const directory = path.join('/', 'usr', 'src', 'app', 'pingpong')
+const filePath = path.join(directory, 'counter.txt')
 
 const getStatus = () => {
     const timeStampDate = new Date(Date.now())
@@ -18,8 +16,20 @@ const getStatus = () => {
     return `${timeStampDate.toUTCString()}: ${string}`
 }
 
-setInterval(() => {
-    writeToFile(getStatus())
-}, 5000)
+const getPingPongs = () => {
+    const counter = fs.existsSync(filePath)
+        ? fs.readFileSync(filePath)
+        : '-1'
+    
+    return `Ping / Pongs: ${counter}`
+}
 
-console.log('Started logger')
+const app = express()
+
+app.get('/', (req, res) => {
+    res.send(`${getStatus()} <br/> ${getPingPongs()}`)
+})
+
+app.listen(PORT, () => {
+    console.log('Logger running on port', PORT)
+})

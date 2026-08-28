@@ -13,16 +13,12 @@ spec:
         app: log-output
     spec:
       volumes:
-        - name: log-output
-          emptyDir: {}
+        - name: pingpong-counter
+          persistentVolumeClaim:
+            claimName: pingpong-claim
       containers:
         - name: log-output
-          image: sashausoskin/log-output:v3
+          image: sashausoskin/log-output:v5
           volumeMounts:
-          - name: log-output
-            mountPath: /usr/src/app/files
-        - name: log-getter
-          image: sashausoskin/log-getter:v1
-          volumeMounts:
-          - name: log-output
-            mountPath: /usr/src/app/files
+            - name: pingpong-counter
+              mountPath: /usr/src/app/pingpong
