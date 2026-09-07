@@ -6,6 +6,13 @@ spec:
   rules:
   - http:
       paths:
+      - path: /image
+        pathType: Prefix
+        backend:
+          service:
+            name: image-svc
+            port:
+              number: 1234
       - path: /
         pathType: Prefix
         backend:

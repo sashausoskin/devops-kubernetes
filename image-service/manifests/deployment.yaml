@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-app-dep
+  name: image-service-dep
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: todo-app
+      app: image-service
   template:
     metadata:
       labels:
-        app: todo-app
+        app: image-service
     spec:
       containers:
-        - name: todo-app
-          image: sashausoskin/todo-app:v4
+        - name: image-service
+          image: sashausoskin/image-service:v1
           env:
           - name: PORT
-            value: "3000"
+            value: "3002"

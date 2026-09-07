@@ -4,15 +4,8 @@ COPY . .
 
 RUN npm ci
 
-RUN npx tsc --outDir dist
+RUN npm run build
 
-FROM node:24-alpine
+FROM nginx:alpine
 
-COPY --from=build-stage ./dist .
-
-COPY ./package-lock.json .
-COPY ./package.json .
-
-RUN npm ci
-
-CMD [ "node", "index.js" ]
+COPY --from=build-stage ./dist /usr/share/nginx/html
