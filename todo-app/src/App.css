@@ -128,3 +128,24 @@
 img {
   border-radius: 10px;
 }
+
+.todosContainer {
+  display: flex;
+  align-items: center;
+  flex-direction:column;
+  gap: 25px;
+  margin: 40px 0px;
+}
+
+.todoCard {
+  width: 50%;
+  align-content:end;
+}
+
+.inputContainer {
+  display: flex;
+  align-content: center;
+  margin: auto;
+  justify-content: center;
+  gap: 20px;
+}
