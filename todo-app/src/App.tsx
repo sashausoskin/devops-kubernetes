@@ -1,21 +1,20 @@
 import { useState } from 'react'
 import './App.css'
 import { Button, Card, TextField } from '@mui/material'
-
-const defaultTodos = [
-  'Learn Kubernetes basics',
-  'Deploy application to cluster',
-  'Configure persistent volumes'
-]
+import { useTodosFetch, useTodosPush } from './api'
 
 export const App = () => {
-  const [todos, setTodos] = useState(defaultTodos)
   const [inputValue, setInputValue] = useState('')
 
+  const {data: todos, isLoading} = useTodosFetch()
+  const {mutate: mutateTodos } = useTodosPush()
+
   const onSubmit = () => {
-    setTodos([...todos, inputValue])
+    mutateTodos(inputValue)
     setInputValue('')
   }
+
+  if (isLoading || todos === undefined) return <a>Loading...</a>
 
   return <>
     <div className='mainContainer'>
