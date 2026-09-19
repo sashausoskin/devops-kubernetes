@@ -8,7 +8,7 @@ const filePath = path.join(directory, 'counter.txt')
 const app = express()
 let counter = fs.existsSync(filePath)
     ? Number(fs.readFileSync(filePath))
-    : -1
+    : 0
     
 const PORT = 3000
 
@@ -22,6 +22,10 @@ app.get('/pingpong', (req, res) => {
     }
     fs.writeFileSync(filePath, counter.toString())
     return res.send(`pong ${counter}`)
+})
+
+app.get('/pings', (req, res) => {
+    return res.send(counter)
 })
 
 console.log('Listening on port', PORT)

@@ -18,7 +18,7 @@ spec:
           claimName: pingpong-claim
       containers:
         - name: ping-pong
-          image: sashausoskin/ping-pong:v3
+          image: sashausoskin/ping-pong:v4
           volumeMounts:
             - name: pingpong-counter
               mountPath: /usr/src/app/pingpong

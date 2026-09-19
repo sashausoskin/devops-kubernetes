@@ -1,14 +1,11 @@
 import * as uuid from 'uuid'
-import path from 'path'
-import fs from 'fs'
+import axios from 'axios'
 import express from 'express'
 
 const string = uuid.v7();
 
 const PORT = process.env.PORT || 3001
-
-const directory = path.join('/', 'usr', 'src', 'app', 'pingpong')
-const filePath = path.join(directory, 'counter.txt')
+const pingPongUrl = process.env.PING_PONG_URL || 'http://localhost:3000'
 
 const getStatus = () => {
     const timeStampDate = new Date(Date.now())
@@ -16,18 +13,15 @@ const getStatus = () => {
     return `${timeStampDate.toUTCString()}: ${string}`
 }
 
-const getPingPongs = () => {
-    const counter = fs.existsSync(filePath)
-        ? fs.readFileSync(filePath)
-        : '-1'
-    
-    return `Ping / Pongs: ${counter}`
+const getPingPongs = async () => {
+    const pingPongs = await axios.get(`${pingPongUrl}/pings`)
+    return `Ping / Pongs: ${pingPongs.data}`
 }
 
 const app = express()
 
-app.get('/', (req, res) => {
-    res.send(`${getStatus()} <br/> ${getPingPongs()}`)
+app.get('/log', async (req, res) => {
+    res.send(`${getStatus()} <br/> ${await getPingPongs()}`)
 })
 
 app.listen(PORT, () => {

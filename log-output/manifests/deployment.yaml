@@ -18,7 +18,7 @@ spec:
             claimName: pingpong-claim
       containers:
         - name: log-output
-          image: sashausoskin/log-output:v5
-          volumeMounts:
-            - name: pingpong-counter
-              mountPath: /usr/src/app/pingpong
+          image: sashausoskin/log-output:v7
+          env:
+          - name: PING_PONG_URL
+            value: "http://ping-pong-svc:2345"
