@@ -8,6 +8,8 @@ RUN npx tsc --outDir dist
 
 FROM node:24-alpine
 
+WORKDIR /usr/src/app
+
 COPY --from=build-stage ./dist .
 
 COPY ./package-lock.json .

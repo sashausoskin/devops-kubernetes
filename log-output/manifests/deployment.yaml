@@ -17,9 +17,24 @@ spec:
         - name: pingpong-counter
           persistentVolumeClaim:
             claimName: pingpong-claim
+        - name: config
+          configMap:
+            name: log-config
+            items:
+            - key: "information"
+              path: "information.txt"
       containers:
         - name: log-output
-          image: sashausoskin/log-output:v7
+          image: sashausoskin/log-output:v10
           env:
           - name: PING_PONG_URL
             value: "http://ping-pong-svc:2345"
+          - name: MESSAGE
+            valueFrom:
+              configMapKeyRef:
+                name: log-config
+                key: message
+          volumeMounts:
+          - name: config
+            mountPath: "/usr/src/app/config"
+            readOnly: true
