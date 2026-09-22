@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3002
 
 const fileDirectory = path.join('/', 'usr', 'src', 'app', 'image')
 const filePath = path.join(fileDirectory, 'image.jpg')
+const imageFetchURL = process.env.PICSUM_URL || 'https://picsum.photos/1200'
 
 const cacheTimeout = 10 * 60_000
 
@@ -33,7 +34,7 @@ const updateImage = async () => {
     if (!fs.existsSync(fileDirectory)) {
         fs.mkdirSync(fileDirectory, {recursive: true})
     }
-    const response = await axios.get('https://picsum.photos/1200', { responseType: 'stream' })
+    const response = await axios.get(imageFetchURL, { responseType: 'stream' })
     response.data.pipe(fs.createWriteStream(filePath))
 }
 

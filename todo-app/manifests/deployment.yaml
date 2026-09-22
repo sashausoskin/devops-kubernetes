@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: todo-app
-          image: sashausoskin/todo-app:v6
+          image: sashausoskin/todo-app:v7
           env:
           - name: PORT
             value: "3000"

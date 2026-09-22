@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 const todoQueryKey = ['todos']
-const todosBackendUrl = import.meta.env.VITE_TODOS_BACKEND_URL
+const todosBackendUrl = import.meta.env.DEV ? import.meta.env.VITE_TODOS_BACKEND_URL : '/'
 
 export const useTodosFetch = () => (useQuery({queryKey: todoQueryKey, queryFn: fetchTodos}))
 
