@@ -1,32 +1,44 @@
 import express from 'express'
 import fs from 'node:fs'
-import path from 'node:path'
+import { Client } from 'pg'
+import dotenv from 'dotenv'
 
-const directory = path.join('/', 'usr', 'src', 'app', 'pingpong')
-const filePath = path.join(directory, 'counter.txt')
+dotenv.config()
 
 const app = express()
-let counter = fs.existsSync(filePath)
-    ? Number(fs.readFileSync(filePath))
-    : 0
     
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
+const dbClient = await new Client({connectionString: process.env.POSTGRES_URL}).connect()
 
+const initDb = async () => {
+    await dbClient.query('CREATE TABLE IF NOT EXISTS counter (counter INT);')
+}
 
-app.get('/pingpong', (req, res) => {
-    counter++
-    
-    if (!fs.existsSync(filePath)) {
-        fs.mkdirSync(directory, {recursive: true})
-    }
-    fs.writeFileSync(filePath, counter.toString())
+const incrementCounter = async (currentCounter: number) => {
+    await dbClient.query('DELETE FROM counter *')
+    await dbClient.query('INSERT INTO counter (counter) VALUES ($1::int)', [currentCounter + 1])
+}
+
+const getCounter = async () => {
+    const res = await dbClient.query('SELECT counter FROM counter')
+
+    if (res.rowCount === 0) return 0
+
+    return res.rows[0].counter
+}
+
+app.get('/pingpong', async (req, res) => {
+    const counter = await getCounter()
+    await incrementCounter(counter)
     return res.send(`pong ${counter}`)
 })
 
-app.get('/pings', (req, res) => {
-    return res.send(counter)
+app.get('/pings', async (req, res) => {
+    return res.send(await getCounter())
 })
 
-console.log('Listening on port', PORT)
-app.listen(PORT)
+app.listen(PORT, async () => {
+    console.log('Listening on port', PORT)
+    await initDb();
+})

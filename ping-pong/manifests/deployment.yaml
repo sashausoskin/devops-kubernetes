@@ -13,13 +13,11 @@ spec:
       labels:
         app: ping-pong
     spec:
-      volumes:
-      - name: pingpong-counter
-        persistentVolumeClaim:
-          claimName: pingpong-claim
       containers:
         - name: ping-pong
-          image: sashausoskin/ping-pong:v4
-          volumeMounts:
-            - name: pingpong-counter
-              mountPath: /usr/src/app/pingpong
+          image: sashausoskin/ping-pong:v5
+          env:
+            - name: POSTGRES_URL
+              value: postgresql://postgres:secret@postgres-svc:5432/postgres
+            - name: PORT
+              value: "3000"
