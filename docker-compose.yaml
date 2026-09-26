@@ -1,3 +1,5 @@
+# Compose this to start a local postgres database for local development.
+
 services:
   db:
     image: postgres

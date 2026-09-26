@@ -15,7 +15,9 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: sashausoskin/todo-backend:v1
+          image: sashausoskin/todo-backend:v2
           env:
             - name: PORT
               value: "3000"
+            - name: POSTGRES_URL
+              value: postgresql://postgres:secret@todo-postgres-svc:5432/postgres
