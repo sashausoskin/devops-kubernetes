@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const PORT = process.env.PORT || 3003
+const MAX_LENGTH = Number(process.env.MAX_TODO_LENGTH) || 140
 
 const dbPool = await new Pool({connectionString: process.env.POSTGRES_URL}).connect()
 
@@ -32,10 +33,17 @@ app.get('/todos', async (req, res) => {
 })
 
 app.post('/todos', (req, res) => {
-    const todo = req.body.todo
+    const todo: string = req.body.todo
 
     if (Array.isArray(todo) || typeof todo === 'object' || todo === null) {
         return res.status(400).send('Make sure to only send a single string to add.')
+    }
+
+    console.log('Adding a todo:', todo)
+
+    if (todo.length > MAX_LENGTH) {
+        console.error('ERROR: todo is too long')
+        return res.status(413).send(`The maximum length of a todo is ${MAX_LENGTH} characters`)
     }
 
     addTodo(todo)

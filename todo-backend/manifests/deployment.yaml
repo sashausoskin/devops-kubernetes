@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: sashausoskin/todo-backend:v2
+          image: sashausoskin/todo-backend:v4
           env:
             - name: PORT
               value: "3000"
