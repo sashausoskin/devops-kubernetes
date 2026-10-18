@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: todo-wiki
+  namespace: project
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: todo-wiki
+            image: sashausoskin/todo-wiki:v3
+            imagePullPolicy: IfNotPresent
+
+          restartPolicy: OnFailure

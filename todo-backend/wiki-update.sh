@@ -1,0 +1,2 @@
+wiki_article=$(curl -w "%{url_effective}\n" -I -L -s -S  -o /dev/null https://en.wikipedia.org/wiki/Special:Random)
+curl -d "{\"todo\": \"Read $wiki_article\"}" -H "Content-Type: application/json" http://todo-backend-svc:2346/todos
