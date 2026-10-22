@@ -36,7 +36,7 @@ const getPingPongs = async () => {
 
 const app = express()
 
-app.get('/log', async (req, res) => {
+app.get('/', async (req, res) => {
     res.send(`${getFileContents()} <br/> ${getMessage()} <br/> ${getStatus()} <br/> ${await getPingPongs()}`)
 })
 

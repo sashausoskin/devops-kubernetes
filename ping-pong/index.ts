@@ -38,6 +38,10 @@ app.get('/pings', async (req, res) => {
     return res.send(await getCounter())
 })
 
+app.get('/', async (req, res) => {
+    return res.send('Welcome to the PingPong service!')
+})
+
 app.listen(PORT, async () => {
     console.log('Listening on port', PORT)
     await initDb();

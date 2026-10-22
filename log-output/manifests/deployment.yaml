@@ -14,9 +14,6 @@ spec:
         app: log-output
     spec:
       volumes:
-        - name: pingpong-counter
-          persistentVolumeClaim:
-            claimName: pingpong-claim
         - name: config
           configMap:
             name: log-config
@@ -25,7 +22,7 @@ spec:
               path: "information.txt"
       containers:
         - name: log-output
-          image: sashausoskin/log-output:v10
+          image: sashausoskin/log-output:v11
           env:
           - name: PING_PONG_URL
             value: "http://ping-pong-svc:2345"
