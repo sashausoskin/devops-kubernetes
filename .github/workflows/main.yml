@@ -53,7 +53,7 @@ jobs:
         run: echo "IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
 
       - name: Build
-        run: docker build --tag $IMAGE_TAG .
+        run: docker build --tag $IMAGE_TAG ./${{ matrix.app }}
     
       - name: Publish
         run: docker push $IMAGE_TAG
@@ -62,8 +62,9 @@ jobs:
         uses: imranismail/setup-kustomize@v3
 
       - name: Deploy
+        working-directory:  ${{matrix.app}}
         run: |-
-          kustomize edit set image PROJECT/IMAGE=$IMAGE_TAG
+          kustomize edit set image IMAGE_VER=$IMAGE_TAG
           kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment $SERVICE
-          kubectl get services -o wide
+          kubectl rollout status deployment ${SERVICE}-dep -n project
+          kubectl get services -o wide -n project

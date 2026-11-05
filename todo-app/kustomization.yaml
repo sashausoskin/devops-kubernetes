@@ -4,3 +4,6 @@ resources:
   - manifests/deployment.yaml
   - manifests/service.yaml
   - manifests/ingress.yaml
+images:
+  - name: IMAGE_VER
+    newName: sashausoskin/todo-app:v9

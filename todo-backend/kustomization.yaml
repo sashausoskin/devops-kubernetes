@@ -5,3 +5,6 @@ resources:
   - manifests/deployment.yaml
   - manifests/service.yaml
   - manifests/cron.yaml
+images:
+  - name: IMAGE_VER
+    newName: sashausoskin/todo-backend:v5

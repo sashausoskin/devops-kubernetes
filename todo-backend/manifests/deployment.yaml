@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-backend
+  name: todo-backend-dep
   namespace: project
 spec:
   replicas: 1
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: sashausoskin/todo-backend:v5
+          image: IMAGE_VER
           env:
             - name: PORT
               value: "3000"

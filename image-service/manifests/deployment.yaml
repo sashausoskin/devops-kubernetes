@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: image-service
-          image: sashausoskin/image-service:v3
+          image: IMAGE_VER
           env:
           - name: PORT
             value: "3002"
