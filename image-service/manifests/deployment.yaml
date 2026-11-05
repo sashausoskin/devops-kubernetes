@@ -15,9 +15,13 @@ spec:
     spec:
       containers:
         - name: image-service
-          image: sashausoskin/image-service:v2
+          image: sashausoskin/image-service:v3
           env:
           - name: PORT
             value: "3002"
           - name: PICSUM_URL
             value: 'https://picsum.photos/3000'
+          readinessProbe:
+            httpGet:
+              path: /image
+              port: 3002

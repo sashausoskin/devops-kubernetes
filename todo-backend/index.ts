@@ -50,6 +50,10 @@ app.post('/todos', (req, res) => {
     return res.status(200).json(todo)
 })
 
+app.get('/', (req, res) => {
+    return res.send("Welcome to the Todos backend API!")
+})
+
 app.listen(PORT, async () => {
     console.log(`App listening on port ${PORT}`)
     await initDb()

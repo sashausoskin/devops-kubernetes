@@ -47,6 +47,10 @@ app.get('/image', async (req, res) => {
     res.send(image)
 })
 
+app.get('/', async (req, res) => {
+    return res.send("Welcome to the image service! Get an image via the /image endpoint")
+})
+
 app.listen(PORT, () => {
     console.log('Image service running on port', PORT)
 })
