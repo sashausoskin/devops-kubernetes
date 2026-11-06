@@ -25,6 +25,7 @@ jobs:
       IMAGE: ${{matrix.app}}
       SERVICE: ${{matrix.app}}
       BRANCH: ${{ github.ref_name }}
+      NAMESPACE: ${{ case(github.ref_name == 'master', 'project', github.ref_name) }}
 
     steps:
       - name: Checkout
@@ -64,6 +65,9 @@ jobs:
       - name: Deploy
         working-directory:  ${{matrix.app}}
         run: |-
+          kubectl create namespace ${NAMESPACE} || true
+          kubectl config set-context --current --namespace=${NAMESPACE}
+          kustomize edit set namespace ${NAMESPACE}
           kustomize edit set image IMAGE_VER=$IMAGE_TAG
           kustomize build . | kubectl apply -f -
           kubectl rollout status deployment ${SERVICE}-dep -n project
