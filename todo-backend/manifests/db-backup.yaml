@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: todo-db-backup
+  namespace: project
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: todo-backup-uploader
+          nodeSelector:
+            iam.gke.io/gke-metadata-server-enabled: "true"
+          containers:
+          - name: todo-db-backup
+            image: sashausoskin/todo-db-backup-uploader:v4
+            env:
+            - name: DB_URL
+              value: postgresql://postgres:secret@todo-postgres-svc:5432/postgres
+            - name: BUCKET_URL
+              value: gs://todo-backups-bucket
+
+          restartPolicy: OnFailure
