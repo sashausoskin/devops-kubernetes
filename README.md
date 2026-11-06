@@ -37,4 +37,27 @@ Exercises for the [DevOps with Kubernetes](https://courses.mooc.fi/org/uh-cs/cou
 - Exercise 6: https://github.com/sashausoskin/devops-kubernetes/tree/3.6
 - Exercise 7: https://github.com/sashausoskin/devops-kubernetes/tree/3.7
 - Exercise 8: https://github.com/sashausoskin/devops-kubernetes/tree/3.8
-- Exercise 9: https://github.com/sashausoskin/devops-kubernetes/tree/3.9
+
+# Exercise 3.9
+
+## Pros of Google Cloud SQL
+- Maintained. You don't have to worry about updating the server.
+- Easy to scale. Replication is built-in.
+- Easy back-ups.
+- Less configuration.
+- Uptime is handled for you.
+
+## Cons of Google Cloud SQL
+- Costs.
+- Less control of data.
+- Less control over functionality.
+
+## Pros of a DIY solution
+- Full control. Admin access to the database.
+- Likely cheaper.
+- If fully DIY and on-premises, it's faster to fetch large amounts of data.
+
+## Cons of a DIY solution
+- Maintenace.
+- May require a lot of configuration.
+- More difficult to scale up.
