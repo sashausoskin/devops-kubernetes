@@ -20,6 +20,7 @@ jobs:
       REGISTRY: europe-north1-docker.pkg.dev
       REPOSITORY: devops-kubernetes
       BRANCH: ${{ github.ref_name }}
+      NAMESPACE: ${{ github.ref_name }}
 
     steps:
       - name: Checkout
