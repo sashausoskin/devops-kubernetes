@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   delete:
+    if: github.event.ref_type == 'branch'
     name: Delete the feature branch deployment
     runs-on: ubuntu-latest
     environment: GKE_PROJECT
@@ -20,7 +21,7 @@ jobs:
       REGISTRY: europe-north1-docker.pkg.dev
       REPOSITORY: devops-kubernetes
       BRANCH: ${{ github.ref_name }}
-      NAMESPACE: ${{ github.ref_name }}
+      NAMESPACE: ${{ github.event.ref }}
 
     steps:
       - name: Checkout
