@@ -2,6 +2,8 @@ name: Release application
 
 on:
   push:
+    branches:
+       - "**"
 
 permissions:
   contents: read
@@ -70,5 +72,5 @@ jobs:
           kustomize edit set namespace ${NAMESPACE}
           kustomize edit set image IMAGE_VER=$IMAGE_TAG
           kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment ${SERVICE}-dep -n project
+          kubectl rollout status deployment ${SERVICE}-dep -n ${NAMESPACE}
           kubectl get services -o wide -n project
