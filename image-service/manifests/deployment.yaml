@@ -25,3 +25,10 @@ spec:
             httpGet:
               path: /image
               port: 3002
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "5m"
+            limits:
+              memory: "256Mi"
+              cpu: "50m"
