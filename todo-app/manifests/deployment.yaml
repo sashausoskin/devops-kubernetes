@@ -26,3 +26,9 @@ spec:
             limits:
               memory: "64Mi"
               cpu: "250m"
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            httpGet:
+               path: /healthz
+               port: 3000

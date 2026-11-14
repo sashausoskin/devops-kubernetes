@@ -70,6 +70,8 @@ app.get('/healthz', async (req, res) => {
 
 app.post('/healthz/break', async (req, res) => {
     isHealthy = false
+
+    return res.sendStatus(200)
 })
 
 app.listen(PORT, async () => {
