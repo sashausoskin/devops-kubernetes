@@ -22,7 +22,7 @@ spec:
               path: "information.txt"
       containers:
         - name: log-output
-          image: sashausoskin/log-output:v11
+          image: sashausoskin/log-output:v12
           env:
           - name: PING_PONG_URL
             value: "http://ping-pong-svc:2345"
@@ -35,3 +35,9 @@ spec:
           - name: config
             mountPath: "/usr/src/app/config"
             readOnly: true
+          readinessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            httpGet:
+              path: /healthz
+              port: 3001

@@ -38,6 +38,17 @@ app.get('/pings', async (req, res) => {
     return res.send(await getCounter())
 })
 
+app.get('/healthz', async (req, res) => {
+    try {
+        await dbClient.query('SELECT 1 FROM counter LIMIT 1;')
+        return res.sendStatus(200)
+    }
+    catch (e) {
+        console.error('The server is not healthy', e)
+        return res.sendStatus(500)
+    }
+})
+
 app.listen(PORT, async () => {
     console.log('Listening on port', PORT)
     await initDb();

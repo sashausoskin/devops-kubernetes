@@ -40,6 +40,11 @@ app.get('/', async (req, res) => {
     res.send(`${getFileContents()} <br/> ${getMessage()} <br/> ${getStatus()} <br/> ${await getPingPongs()}`)
 })
 
+app.get('/healthz', async (req, res) => {
+    const healthRes = await axios.get(`${pingPongUrl}/healthz`)
+    res.sendStatus(healthRes.status)
+})
+
 app.listen(PORT, () => {
     console.log('Logger running on port', PORT)
 })
