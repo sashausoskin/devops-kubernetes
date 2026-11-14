@@ -54,6 +54,24 @@ app.get('/', (req, res) => {
     return res.send("Welcome to the Todos backend API!")
 })
 
+let isHealthy = true
+
+app.get('/healthz', async (req, res) => {
+    if (!isHealthy) return res.sendStatus(500)
+
+    try {
+        await dbPool.query('SELECT 1 FROM todos LIMIT 1;')
+        return res.sendStatus(200)
+    } catch (e) {
+        console.error('The DB connection failed', e)
+        return res.sendStatus(500)
+    }
+})
+
+app.post('/break', async (req, res) => {
+    isHealthy = false
+})
+
 app.listen(PORT, async () => {
     console.log(`App listening on port ${PORT}`)
     await initDb()

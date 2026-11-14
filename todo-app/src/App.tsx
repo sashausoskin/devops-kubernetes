@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import './App.css'
 import { Button, Card, TextField } from '@mui/material'
-import { useTodosFetch, useTodosPush } from './api'
+import { useHealthCheck, useTodosFetch, useTodosPush } from './api'
 
 export const App = () => {
   const [inputValue, setInputValue] = useState('')
 
+  const {data: isHealthy, isLoading: isCheckingHealth} = useHealthCheck()
   const {data: todos, isLoading} = useTodosFetch()
   const {mutate: mutateTodos } = useTodosPush()
 
@@ -14,7 +15,12 @@ export const App = () => {
     setInputValue('')
   }
 
-  if (isLoading || todos === undefined) return <a>Loading...</a>
+  if (isLoading || isCheckingHealth || todos === undefined) return <a>Loading...</a>
+
+  if (!isHealthy) return <>
+    <h1>System failure</h1>
+    <a>The Todo App is currently unhealthy. Please wait for recovery</a>
+  </>
 
   return <>
     <div className='mainContainer'>
