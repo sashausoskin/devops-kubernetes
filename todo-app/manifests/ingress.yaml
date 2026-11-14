@@ -21,6 +21,13 @@ spec:
             name: todo-backend-svc
             port:
               number: 2346
+      - path: /healthz
+        pathType: Prefix
+        backend:
+          service:
+            name: todo-backend-svc
+            port:
+              number: 2346
       - path: /
         pathType: Prefix
         backend:

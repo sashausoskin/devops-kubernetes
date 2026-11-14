@@ -68,7 +68,7 @@ app.get('/healthz', async (req, res) => {
     }
 })
 
-app.post('/break', async (req, res) => {
+app.post('/healthz/break', async (req, res) => {
     isHealthy = false
 })
 

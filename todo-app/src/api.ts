@@ -25,7 +25,7 @@ export const useBreakApp = () => {
 }
 
 const checkHealth = async () => {
-    const res = await axios.get(`${todosBackendUrl}/todos`)
+    const res = await axios.get(`${todosBackendUrl}/healthz`)
     if (res.status >= 500) {
         return false
     }
@@ -42,5 +42,5 @@ const pushTodos = async (todo: string) => {
 }
 
 const breakApp = async () => {
-    return axios.post(`${todosBackendUrl}/break`)
+    return axios.post(`${todosBackendUrl}/healthz/break`)
 }
