@@ -41,6 +41,10 @@ Exercises for the [DevOps with Kubernetes](https://courses.mooc.fi/org/uh-cs/cou
 - Exercise 11: https://github.com/sashausoskin/devops-kubernetes/tree/3.11
 - Exercise 12: https://github.com/sashausoskin/devops-kubernetes/tree/3.12
 
+## Chapter 4
+- Exercise 1: https://github.com/sashausoskin/devops-kubernetes/tree/4.1
+- Exercise 2: https://github.com/sashausoskin/devops-kubernetes/tree/4.2
+
 # Exercise 3.9
 
 ## Pros of Google Cloud SQL
