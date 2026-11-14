@@ -42,5 +42,5 @@ const pushTodos = async (todo: string) => {
 }
 
 const breakApp = async () => {
-    return axios.post(`${todosBackendUrl}/todos`)
+    return axios.post(`${todosBackendUrl}/break`)
 }
