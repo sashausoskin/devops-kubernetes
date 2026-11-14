@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { Button, Card, TextField } from '@mui/material'
-import { useHealthCheck, useTodosFetch, useTodosPush } from './api'
+import { useBreakApp, useHealthCheck, useTodosFetch, useTodosPush } from './api'
 
 export const App = () => {
   const [inputValue, setInputValue] = useState('')
@@ -9,6 +9,7 @@ export const App = () => {
   const {data: isHealthy, isLoading: isCheckingHealth} = useHealthCheck()
   const {data: todos, isLoading} = useTodosFetch()
   const {mutate: mutateTodos } = useTodosPush()
+  const {mutate: breakApp} = useBreakApp()
 
   const onSubmit = () => {
     mutateTodos(inputValue)
@@ -32,10 +33,11 @@ export const App = () => {
         <Button variant='contained' onClick={onSubmit}>Submit</Button>
       </div>
       <div className='todosContainer'>
-      {todos.map((todo) => 
-        <Card className='todoCard'>{todo}</Card>
-      )}
+        {todos.map((todo) => 
+          <Card className='todoCard'>{todo}</Card>
+        )}
       </div>
+      <Button onClick={() => breakApp()} variant='contained' color='error'>Break app</Button>
     </div>
   </>
 }
