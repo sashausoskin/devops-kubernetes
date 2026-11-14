@@ -5,7 +5,7 @@ const todoQueryKey = ['todos']
 const healthCheckQueryKey = ['health']
 const todosBackendUrl = import.meta.env.DEV ? import.meta.env.VITE_TODOS_BACKEND_URL : ''
 
-export const useHealthCheck = () => (useQuery({queryKey: healthCheckQueryKey, queryFn: checkHealth, refetchInterval: 5000}))
+export const useHealthCheck = () => (useQuery({queryKey: healthCheckQueryKey, queryFn: checkHealth, refetchInterval: 5000, retry: false}))
 
 export const useTodosFetch = () => (useQuery({queryKey: todoQueryKey, queryFn: fetchTodos}))
 
@@ -25,11 +25,13 @@ export const useBreakApp = () => {
 }
 
 const checkHealth = async () => {
-    const res = await axios.get(`${todosBackendUrl}/healthz`)
-    if (res.status >= 500) {
+    try {
+        await axios.get(`${todosBackendUrl}/healthz`)
+        return true
+    }
+    catch {
         return false
     }
-    return true
 }
 
 const fetchTodos = async () => {

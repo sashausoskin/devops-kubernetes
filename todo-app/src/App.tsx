@@ -6,7 +6,7 @@ import { useBreakApp, useHealthCheck, useTodosFetch, useTodosPush } from './api'
 export const App = () => {
   const [inputValue, setInputValue] = useState('')
 
-  const {isError: isNotHealthy, isLoading: isCheckingHealth} = useHealthCheck()
+  const {data: isHealthy, isLoading: isCheckingHealth} = useHealthCheck()
   const {data: todos, isLoading} = useTodosFetch()
   const {mutate: mutateTodos } = useTodosPush()
   const {mutate: breakApp} = useBreakApp()
@@ -18,7 +18,7 @@ export const App = () => {
 
   if (isLoading || isCheckingHealth || todos === undefined) return <a>Loading...</a>
 
-  if (isNotHealthy) return <>
+  if (!isHealthy) return <>
     <h1>System failure</h1>
     <a>The Todo App is currently unhealthy. Please wait for recovery</a>
   </>
