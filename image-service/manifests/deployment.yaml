@@ -23,7 +23,7 @@ spec:
             value: 'https://picsum.photos/3000'
           readinessProbe:
             httpGet:
-              path: /image
+              path: /
               port: 3002
           resources:
             requests:
