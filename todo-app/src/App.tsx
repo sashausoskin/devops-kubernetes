@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import './App.css'
 import { Button, Card, TextField } from '@mui/material'
 import { useBreakApp, useHealthCheck, useTodosFetch, useTodosMarkAsDone, useTodosPush } from './api'
@@ -11,6 +11,8 @@ export const App = () => {
   const {mutate: mutateTodos } = useTodosPush()
   const {mutate: mutateMarkTodoCompleted} = useTodosMarkAsDone()
   const {mutate: breakApp} = useBreakApp()
+
+  const sortedTodos = useMemo(() => todos?.sort((a, b) => a.id - b.id) ?? [], [todos])
 
   const onSubmit = () => {
     mutateTodos(inputValue)
@@ -34,7 +36,7 @@ export const App = () => {
         <Button variant='contained' onClick={onSubmit}>Submit</Button>
       </div>
       <div className='todosContainer'>
-        {todos.map((todo) => 
+        {sortedTodos.map((todo) => 
           <Card className='todoCard' key={todo.id}>
             {todo.todo}
             {todo.done
