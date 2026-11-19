@@ -40,8 +40,11 @@ export const App = () => {
           <Card className='todoCard' key={todo.id}>
             {todo.todo}
             {todo.done
-              ? <Card color='green'>Done </Card>
-              : <Button variant='contained' color='primary' onClick={() => mutateMarkTodoCompleted(todo.id)}>Mark done</Button>
+              ? <Card sx={{bgcolor: 'success.main', color: 'white'}}>Done</Card>
+              : <>
+                <br/>
+                <Button variant='contained' color='primary' onClick={() => mutateMarkTodoCompleted(todo.id)}>Mark done</Button>
+                </>
             }
           </Card>
         )}
