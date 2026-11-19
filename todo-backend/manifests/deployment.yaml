@@ -21,6 +21,8 @@ spec:
               value: "3000"
             - name: POSTGRES_URL
               value: postgresql://postgres:secret@todo-postgres-svc:5432/postgres
+            - name: NATS_URL
+              value: nats://my-nats.nats:4222
           resources:
             requests:
               memory: "64Mi"

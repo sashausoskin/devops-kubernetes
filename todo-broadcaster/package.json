@@ -1,0 +1,20 @@
+{
+  "name": "todo-broadcaster",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "tsc --outDir dist && node dist/index.js"
+  },
+  "author": "Sasha Usoskin",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@nats-io/transport-node": "^3.5.0",
+    "axios": "^1.21.1"
+  }
+}

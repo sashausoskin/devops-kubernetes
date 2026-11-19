@@ -1,7 +1,8 @@
 import express from 'express'
 import cors from 'cors'
-import { Client, Pool } from 'pg'
+import { Pool } from 'pg'
 import dotenv from 'dotenv'
+import { connect } from '@nats-io/transport-node'
 
 dotenv.config()
 
@@ -9,6 +10,10 @@ const PORT = process.env.PORT || 3003
 const MAX_LENGTH = Number(process.env.MAX_TODO_LENGTH) || 140
 
 const dbPool = await new Pool({connectionString: process.env.POSTGRES_URL}).connect()
+
+const nc = await connect({
+    servers: process.env.NATS_URL || 'nats://my-nats.nats:4222'
+})
 
 const app = express()
 
@@ -36,7 +41,8 @@ const addTodo = async (todo: string) => {
 }
 
 const markTodoAsDone = async (id: string) => {
-    await dbPool.query('UPDATE todos SET done = true WHERE id=$1::int', [id])
+    const res = await dbPool.query('UPDATE todos SET done = true WHERE id=$1::int RETURNING id, todo, done', [id])
+    return res.rows[0]
 }
 
 app.get('/todos', async (req, res) => {
@@ -58,11 +64,14 @@ app.post('/todos', async (req, res) => {
     }
 
     const result = await addTodo(todo)
+
+    nc.publish('todo_create', JSON.stringify(result))
     return res.status(200).json(result)
 })
 
 app.put('/todos/:id', async (req, res) => {
-    await markTodoAsDone(req.params.id)
+    const updatedTodo = await markTodoAsDone(req.params.id)
+    nc.publish('todo_update', JSON.stringify(updatedTodo))
     res.sendStatus(200)
 })
 
