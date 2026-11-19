@@ -22,7 +22,7 @@ spec:
               path: "information.txt"
       containers:
         - name: log-output
-          image: sashausoskin/log-output:v12
+          image: PROJECT/IMAGE
           env:
           - name: PING_PONG_URL
             value: "http://ping-pong-svc:2345"
