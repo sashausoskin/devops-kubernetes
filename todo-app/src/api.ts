@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
+import type { Todo } from "./types"
 
 const todoQueryKey = ['todos']
 const healthCheckQueryKey = ['health']
@@ -13,8 +14,18 @@ export const useTodosPush = () => {
     const queryClient = useQueryClient()
 
     return useMutation({mutationFn: pushTodos, onSuccess: (res) => {
-    queryClient.setQueryData<string[]>(todoQueryKey, (oldTodos) => [...(oldTodos ?? []), res.data])
+    queryClient.setQueryData<Todo[]>(todoQueryKey, (oldTodos) => [...(oldTodos ?? []), res.data])
 }})}
+
+export const useTodosMarkAsDone = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation({mutationFn: markTodoAsDone, onSuccess: (_res, id) => {
+        queryClient.setQueryData<Todo[]>(todoQueryKey, (oldTodos) => 
+            oldTodos?.map((todo) => todo.id === id ? {...todo, done: true} : todo)
+        )
+    }})
+}
 
 export const useBreakApp = () => {
     const queryClient = useQueryClient()
@@ -35,12 +46,16 @@ const checkHealth = async () => {
 }
 
 const fetchTodos = async () => {
-    const response = await axios.get<string[]>(`${todosBackendUrl}/todos`)
+    const response = await axios.get<Todo[]>(`${todosBackendUrl}/todos`)
     return response.data
 }
 
 const pushTodos = async (todo: string) => {
     return axios.post(`${todosBackendUrl}/todos`, {todo})
+}
+
+const markTodoAsDone = async (id: number) => {
+    return axios.put(`${todosBackendUrl}/todos/${id}`)
 }
 
 const breakApp = async () => {
